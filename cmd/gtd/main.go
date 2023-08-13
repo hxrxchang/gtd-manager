@@ -13,6 +13,7 @@ import (
 )
 
 func main() {
+	// step1: 環境変数から必要な情報を取得する
 	token := os.Getenv("GITHUB_ACCESS_TOKEN")
 	username := os.Getenv("GITHUB_USERNAME")
 	repo := os.Getenv("GITHUB_REPO")
@@ -32,6 +33,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// step2: GitHub APIを叩いてissueを取得する
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
@@ -46,6 +48,7 @@ func main() {
 	}
 	issue := issues[0]
 
+	// step3: issueの内容を表示する
 	md := goldmark.New(goldmark.WithExtensions(extension.GFM))
 	var buf bytes.Buffer
 	if err := md.Convert([]byte(*issue.Body), &buf); err != nil {
