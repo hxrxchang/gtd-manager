@@ -4,6 +4,8 @@ go 1.21.0
 
 require (
 	github.com/ProtonMail/go-crypto v0.0.0-20230217124315-7d5c6f04bbb8 // indirect
+	github.com/PuerkitoBio/goquery v1.8.1 // indirect
+	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/cloudflare/circl v1.3.3 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-github/v53 v53.2.0 // indirect
