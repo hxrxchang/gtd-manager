@@ -1,14 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"os"
 
-	"github.com/google/go-github/v53/github"
-	"github.com/yuin/goldmark"
-	"github.com/yuin/goldmark/extension"
+	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"
 )
 
@@ -35,25 +32,23 @@ func main() {
 
 	// step2: GitHub APIを叩いてissueを取得する
 	ctx := context.Background()
-	ts := oauth2.StaticTokenSource(
+	src := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
 	)
-	tc := oauth2.NewClient(ctx, ts)
-	client := github.NewClient(tc)
+	httpClient := oauth2.NewClient(ctx, src)
+	client := githubv4.NewClient(httpClient)
 
-	issues, _, err :=client.Issues.ListByRepo(ctx, username, repo, nil)
-	if err != nil {
-		fmt.Printf("Issues.Get returned error: %v\n", err)
-		os.Exit(1)
+	var query struct {
+		Viewer struct {
+			Login     githubv4.String
+			CreatedAt githubv4.DateTime
+		}
 	}
-	issue := issues[0]
 
-	// step3: issueの内容を表示する
-	md := goldmark.New(goldmark.WithExtensions(extension.GFM))
-	var buf bytes.Buffer
-	if err := md.Convert([]byte(*issue.Body), &buf); err != nil {
-		fmt.Printf("md.Convert returned error: %v\n", err)
-		os.Exit(1)
-	  }
-	fmt.Println(buf.String())
+	err := client.Query(context.Background(), &query, nil)
+	if err != nil {
+		// Handle error.
+	}
+	fmt.Println("    Login:", query.Viewer.Login)
+	fmt.Println("CreatedAt:", query.Viewer.CreatedAt)
 }
