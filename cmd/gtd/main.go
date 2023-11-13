@@ -19,7 +19,15 @@ func main() {
 	}
 
 	// step2: GitHub APIを叩いてissueを取得する
-	getIssueData(token, username, repo)
+	issue, err := getIssueData(token, username, repo)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(issue.Body)
+
+	// step3: issueのBodyとコメントのmarkdownから未完了タスクだけを抽出する
 }
 
 func getGitHubInfo() (string, string, string, error) {
@@ -42,7 +50,12 @@ func getGitHubInfo() (string, string, string, error) {
 	return token, username, repo, err
 }
 
-func getIssueData(token, username, repo string) {
+type Issue struct {
+	Body string
+	Comments []string
+}
+
+func getIssueData(token, username, repo string) (*Issue, error) {
 	ctx := context.Background()
 	src := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
@@ -76,10 +89,22 @@ func getIssueData(token, username, repo string) {
 	}
 
 	err := client.Query(context.Background(), &query, variables)
+
 	if err != nil {
-		log.Fatal(err)
+		return nil, fmt.Errorf("failed to get issue data: %w", err)
 	}
-	fmt.Println("Title", query.Repository.Issues.Edges[0].Node.Title)
-	fmt.Println("Body", query.Repository.Issues.Edges[0].Node.Body)
-	fmt.Println("Comment", query.Repository.Issues.Edges[0].Node.Comments)
+
+	if len(query.Repository.Issues.Edges) == 0 {
+		return nil, fmt.Errorf("issue not found")
+	}
+
+	body := string(query.Repository.Issues.Edges[0].Node.Body)
+	var comments []string
+	for _, c := range query.Repository.Issues.Edges[0].Node.Comments.Edges {
+		comments = append(comments, string(c.Node.Body))
+	}
+	return &Issue{
+		Body: body,
+		Comments: comments,
+	}, nil
 }
