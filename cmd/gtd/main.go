@@ -56,19 +56,22 @@ func getIssueData(token, username, repo string) {
 	}
 
 	var query struct {
-		Viewer struct {
-			Login     githubv4.String
-			CreatedAt githubv4.DateTime
-		}
 		Repository struct {
 			Issues struct {
 				Edges []struct {
 					Node struct {
 						Title githubv4.String
 						Body  githubv4.String
+						Comments struct {
+							Edges []struct {
+								Node struct {
+									Body githubv4.String
+								}
+							}
+						} `graphql:"comments(first: 100)"`
 					}
 				}
-			} `graphql:"issues(first: 1, states: OPEN, orderBy: {field: CREATED_AT, direction: DESC})"`
+			} `graphql:"issues(first: 1, orderBy: {field: CREATED_AT, direction: DESC})"`
 		} `graphql:"repository(owner: $owner, name: $name)"`
 	}
 
@@ -76,8 +79,7 @@ func getIssueData(token, username, repo string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("    Login:", query.Viewer.Login)
-	fmt.Println("CreatedAt:", query.Viewer.CreatedAt)
 	fmt.Println("Title", query.Repository.Issues.Edges[0].Node.Title)
 	fmt.Println("Body", query.Repository.Issues.Edges[0].Node.Body)
+	fmt.Println("Comment", query.Repository.Issues.Edges[0].Node.Comments)
 }
