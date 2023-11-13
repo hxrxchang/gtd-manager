@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/shurcooL/githubv4"
@@ -11,26 +12,37 @@ import (
 
 func main() {
 	// step1: 環境変数から必要な情報を取得する
+	token, username, repo, err := getGitHubInfo()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// step2: GitHub APIを叩いてissueを取得する
+	getIssueData(token, username, repo)
+}
+
+func getGitHubInfo() (string, string, string, error) {
+	var err error
 	token := os.Getenv("GITHUB_ACCESS_TOKEN")
 	username := os.Getenv("GITHUB_USERNAME")
 	repo := os.Getenv("GITHUB_REPO")
 
 	if token == "" {
-		fmt.Println("GITHUB_ACCESS_TOKEN is required")
-		os.Exit(1)
+		err = fmt.Errorf("GITHUB_ACCESS_TOKEN is required")
 	}
 
 	if username == "" {
-		fmt.Println("GITHUB_USERNAME is required")
-		os.Exit(1)
+		err = fmt.Errorf("GITHUB_USERNAME is required")
 	}
 
 	if repo == "" {
-		fmt.Println("GITHUB_REPO is required")
-		os.Exit(1)
+		err = fmt.Errorf("GITHUB_REPO is required")
 	}
+	return token, username, repo, err
+}
 
-	// step2: GitHub APIを叩いてissueを取得する
+func getIssueData(token, username, repo string) {
 	ctx := context.Background()
 	src := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
@@ -62,8 +74,7 @@ func main() {
 
 	err := client.Query(context.Background(), &query, variables)
 	if err != nil {
-		fmt.Println(err)
-		// Handle error.
+		log.Fatal(err)
 	}
 	fmt.Println("    Login:", query.Viewer.Login)
 	fmt.Println("CreatedAt:", query.Viewer.CreatedAt)
