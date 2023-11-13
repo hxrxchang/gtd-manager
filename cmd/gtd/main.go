@@ -51,7 +51,7 @@ func getGitHubInfo() (string, string, string, error) {
 }
 
 type Issue struct {
-	Body string
+	Body     string
 	Comments []string
 }
 
@@ -73,8 +73,8 @@ func getIssueData(token, username, repo string) (*Issue, error) {
 			Issues struct {
 				Edges []struct {
 					Node struct {
-						Title githubv4.String
-						Body  githubv4.String
+						Title    githubv4.String
+						Body     githubv4.String
 						Comments struct {
 							Edges []struct {
 								Node struct {
@@ -104,7 +104,7 @@ func getIssueData(token, username, repo string) (*Issue, error) {
 		comments = append(comments, string(c.Node.Body))
 	}
 	return &Issue{
-		Body: body,
+		Body:     body,
 		Comments: comments,
 	}, nil
 }
