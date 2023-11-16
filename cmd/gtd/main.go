@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/hxrxchang/gtd-manager/pkg/env"
 	"github.com/hxrxchang/gtd-manager/pkg/github"
@@ -28,5 +30,11 @@ func main() {
 	filtered := issue.FilterNotChecked(*iss)
 
 	// step4: 抽出したタスクをGitHubのIssueに登録する
-	gh.CreateIssue(filtered)
+	currentTime := time.Now()
+	today := currentTime.Format("2006-01-02")
+	title, err := gh.CreateIssue(iss.RepoID, today, filtered);
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("issue title: %s is created", title)
 }

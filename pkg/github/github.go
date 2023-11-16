@@ -13,6 +13,7 @@ type GitHub struct {
 }
 
 type Issue struct {
+	RepoID   string
 	Body     string
 	Comments []string
 }
@@ -31,9 +32,9 @@ func (g *GitHub) GetIssueData(username, repo string) (*Issue, error) {
 		"name":  githubv4.String(repo),
 		"owner": githubv4.String(username),
 	}
-
 	var query struct {
 		Repository struct {
+			ID   githubv4.String
 			Issues struct {
 				Edges []struct {
 					Node struct {
@@ -67,13 +68,31 @@ func (g *GitHub) GetIssueData(username, repo string) (*Issue, error) {
 	for _, c := range query.Repository.Issues.Edges[0].Node.Comments.Edges {
 		comments = append(comments, string(c.Node.Body))
 	}
+
 	return &Issue{
+		RepoID:   string(query.Repository.ID),
 		Body:     body,
 		Comments: comments,
 	}, nil
 }
 
-func (g *GitHub) CreateIssue(body string) {
+func (g *GitHub) CreateIssue(repoID, title, body string) (string, error) {
 	// https://docs.github.com/en/graphql/reference/mutations#createissue
-	fmt.Println(body)
+	var m struct {
+		CreateIssue struct {
+			Issue struct {
+				Title githubv4.String
+			}
+		} `graphql:"createIssue(input: $input)"`
+	}
+	input := githubv4.CreateIssueInput{
+		RepositoryID: repoID,
+		Title: githubv4.String(title),
+		Body: githubv4.NewString(githubv4.String(body)),
+	}
+	err := g.client.Mutate(context.Background(), &m, input, nil)
+	if err != nil {
+		return "", err
+	}
+	return string(m.CreateIssue.Issue.Title), nil
 }
