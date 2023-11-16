@@ -72,3 +72,8 @@ func (g *GitHub) GetIssueData(username, repo string) (*Issue, error) {
 		Comments: comments,
 	}, nil
 }
+
+func (g *GitHub) CreateIssue(body string) {
+	// https://docs.github.com/en/graphql/reference/mutations#createissue
+	fmt.Println(body)
+}

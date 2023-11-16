@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/hxrxchang/gtd-manager/pkg/env"
@@ -29,5 +28,5 @@ func main() {
 	filtered := issue.FilterNotChecked(*iss)
 
 	// step4: 抽出したタスクをGitHubのIssueに登録する
-	fmt.Println(filtered)
+	gh.CreateIssue(filtered)
 }
