@@ -32,7 +32,7 @@ func main() {
 	// step4: 抽出したタスクをGitHubのIssueに登録する
 	currentTime := time.Now()
 	today := currentTime.Format("2006-01-02")
-	title, err := gh.CreateIssue(iss.RepoID, today, filtered);
+	title, err := gh.CreateIssue(iss.RepoID, today, filtered)
 	if err != nil {
 		log.Fatal(err)
 	}

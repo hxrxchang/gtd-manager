@@ -34,7 +34,7 @@ func (g *GitHub) GetIssueData(username, repo string) (*Issue, error) {
 	}
 	var query struct {
 		Repository struct {
-			ID   githubv4.String
+			ID     githubv4.String
 			Issues struct {
 				Edges []struct {
 					Node struct {
@@ -87,8 +87,8 @@ func (g *GitHub) CreateIssue(repoID, title, body string) (string, error) {
 	}
 	input := githubv4.CreateIssueInput{
 		RepositoryID: repoID,
-		Title: githubv4.String(title),
-		Body: githubv4.NewString(githubv4.String(body)),
+		Title:        githubv4.String(title),
+		Body:         githubv4.NewString(githubv4.String(body)),
 	}
 	err := g.client.Mutate(context.Background(), &m, input, nil)
 	if err != nil {
