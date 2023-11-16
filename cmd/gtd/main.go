@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"
@@ -25,9 +26,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(issue.Body)
-
 	// step3: issueのBodyとコメントのmarkdownから未完了タスクだけを抽出する
+	var filtered string
+	fmt.Println(filtered)
+	filterNotChecked(issue.Body, &filtered)
+
+	for _, comment := range issue.Comments {
+		filterNotChecked(comment, &filtered)
+	}
+	fmt.Println(filtered)
 }
 
 func getGitHubInfo() (string, string, string, error) {
@@ -107,4 +114,17 @@ func getIssueData(token, username, repo string) (*Issue, error) {
 		Body:     body,
 		Comments: comments,
 	}, nil
+}
+
+func splitByLine(s string) []string {
+	return strings.Split(s, "\n")
+}
+
+func filterNotChecked(body string, res *string) {
+	for _, line := range splitByLine(body) {
+		speceTrimmed := strings.TrimLeft(line, " ")
+		if strings.HasPrefix(speceTrimmed, "- [ ]") {
+			*res += line + "\n"
+		}
+	}
 }
