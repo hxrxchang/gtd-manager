@@ -4,18 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/hxrxchang/gtd-manager/pkg/issue"
 	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"
 )
 
 type GitHub struct {
 	client *githubv4.Client
-}
-
-type Issue struct {
-	RepoID   string
-	Body     string
-	Comments []string
 }
 
 func New(token string) *GitHub {
@@ -27,7 +22,7 @@ func New(token string) *GitHub {
 	return &GitHub{client: client}
 }
 
-func (g *GitHub) GetIssueData(username, repo string) (*Issue, error) {
+func (g *GitHub) GetIssueData(username, repo string) (*issue.Issue, error) {
 	variables := map[string]interface{}{
 		"name":  githubv4.String(repo),
 		"owner": githubv4.String(username),
@@ -69,7 +64,7 @@ func (g *GitHub) GetIssueData(username, repo string) (*Issue, error) {
 		comments = append(comments, string(c.Node.Body))
 	}
 
-	return &Issue{
+	return &issue.Issue{
 		RepoID:   string(query.Repository.ID),
 		Body:     body,
 		Comments: comments,

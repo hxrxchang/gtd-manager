@@ -2,15 +2,19 @@ package issue
 
 import (
 	"strings"
-
-	"github.com/hxrxchang/gtd-manager/pkg/github"
 )
 
-func FilterNotChecked(issue github.Issue) string {
-	var filtered string
-	filterBody(issue.Body, &filtered)
+type Issue struct {
+	RepoID   string
+	Body     string
+	Comments []string
+}
 
-	for _, comment := range issue.Comments {
+func (i *Issue) FilterNotChecked() string {
+	var filtered string
+	filterBody(i.Body, &filtered)
+
+	for _, comment := range i.Comments {
 		filterBody(comment, &filtered)
 	}
 	return filtered
