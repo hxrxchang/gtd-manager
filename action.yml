@@ -1,10 +1,10 @@
-name: "Hello World"
-description: "Greet someone"
+name: "Create a new issue"
+description: "Extract and register only the incomplete tasks from yesterday's issue into a new issue"
 inputs:
-  who-to-greet: # id of input
-    description: "Who to greet"
+  GITHUB_ACCESS_TOKEN: # id of input
+    description: "Access token which has read and write access to issues"
     required: true
-    default: "World"
+    default: ""
 outputs:
   random-number:
     description: "Random number"
@@ -21,3 +21,18 @@ runs:
       shell: bash
     - run: goodbye.sh
       shell: bash
+
+    - uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: "1.21"
+
+    - name: Set up environment
+      shell: bash
+      run: echo "FOO=${{ inputs.GITHUB_ACCESS_TOKEN }}" >> $GITHUB_ENV # 環境変数を設定する
+
+    - name: Run
+      shell: bash
+      run: go run cmd/gtd/main.go
