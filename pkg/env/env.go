@@ -8,11 +8,11 @@ import (
 
 func GetGitHubInfo() (string, string, string, error) {
 	var err error
-	token := os.Getenv("GITHUB_ACCESS_TOKEN")
-	ghrepo := os.Getenv("GITHUB_REPOSITORY")
+	token := os.Getenv("ACCESS_TOKEN")
+	ghrepo := os.Getenv("REPOSITORY")
 
 	if token == "" {
-		err = fmt.Errorf("GITHUB_ACCESS_TOKEN is required")
+		err = fmt.Errorf("ACCESS_TOKEN is required")
 	}
 
 	username := strings.Split(ghrepo, "/")[0]

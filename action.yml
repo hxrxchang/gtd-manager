@@ -1,11 +1,11 @@
 name: "Create a new issue"
 description: "Extract and register only the incomplete tasks from yesterday's issue into a new issue"
 inputs:
-  GITHUB_ACCESS_TOKEN: # id of input
+  ACCESS_TOKEN: # id of input
     description: "Access token which has read and write access to issues"
     required: true
     default: ""
-  GITHUB_REPOSITORY:
+  REPOSITORY:
     description: "Repository name"
     required: true
     default: ""
@@ -35,4 +35,4 @@ runs:
 
     - name: Run
       shell: bash
-      run: GITHUB_ACCESS_TOKEN=${{ inputs.GITHUB_ACCESS_TOKEN}} GITHUB_REPOSITORY=${{ inputs.GITHUB_REPOSITORY }} go run cmd/gtd/main.go
+      run: ACCESS_TOKEN=${{ inputs.ACCESS_TOKEN}} REPOSITORY=${{ inputs.REPOSITORY }} go run cmd/gtd/main.go

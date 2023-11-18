@@ -1,2 +1,2 @@
-export GITHUB_ACCESS_TOKEN=""
-export GITHUB_REPOSITORY=""
+export ACCESS_TOKEN=""
+export REPOSITORY=""
