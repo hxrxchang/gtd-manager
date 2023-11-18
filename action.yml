@@ -5,6 +5,10 @@ inputs:
     description: "Access token which has read and write access to issues"
     required: true
     default: ""
+  GITHUB_REPOSITORY:
+    description: "Repository name"
+    required: true
+    default: ""
 outputs:
   random-number:
     description: "Random number"
