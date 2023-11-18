@@ -33,10 +33,6 @@ runs:
       with:
         go-version: "1.21"
 
-    - name: Set up environment
-      shell: bash
-      run: echo "FOO=${{ inputs.GITHUB_ACCESS_TOKEN }}" >> $GITHUB_ENV
-
     - name: Run
       shell: bash
-      run: go run cmd/gtd/main.go
+      run: GITHUB_ACCESS_TOKEN=${{ inputs.GITHUB_ACCESS_TOKEN}} GITHUB_REPOSITORY=${{ inputs.GITHUB_REPOSITORY }} go run cmd/gtd/main.go
