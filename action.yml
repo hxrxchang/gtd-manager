@@ -22,7 +22,7 @@ runs:
     - run: goodbye.sh
       shell: bash
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Go
       uses: actions/setup-go@v4
@@ -31,7 +31,7 @@ runs:
 
     - name: Set up environment
       shell: bash
-      run: echo "FOO=${{ inputs.GITHUB_ACCESS_TOKEN }}" >> $GITHUB_ENV # 環境変数を設定する
+      run: echo "FOO=${{ inputs.GITHUB_ACCESS_TOKEN }}" >> $GITHUB_ENV
 
     - name: Run
       shell: bash
