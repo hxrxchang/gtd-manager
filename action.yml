@@ -9,23 +9,12 @@ inputs:
     description: "Repository name"
     required: true
     default: ""
-outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-number }}
+  TIME_ZONE:
+    description: "Time zone"
+    default: "UTC"
 runs:
   using: "composite"
   steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
-      shell: bash
-    - id: random-number-generator
-      run: echo "random-number=$(echo $RANDOM)" >> $GITHUB_OUTPUT
-      shell: bash
-    - run: echo "${{ github.action_path }}" >> $GITHUB_PATH
-      shell: bash
-    - run: goodbye.sh
-      shell: bash
-
     - name: Set up Go
       uses: actions/setup-go@v4
       with:
@@ -38,4 +27,6 @@ runs:
 
     - name: Run
       shell: bash
+      env:
+        TZ: ${{ inputs.TIME_ZONE }}
       run: ACCESS_TOKEN=${{ inputs.ACCESS_TOKEN}} REPOSITORY=${{ inputs.REPOSITORY }} gtd
