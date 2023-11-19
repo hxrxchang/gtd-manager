@@ -26,11 +26,14 @@ runs:
     - run: goodbye.sh
       shell: bash
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
+    - name: Install
+      uses: jaxxstorm/action-install-gh-release@v1.10.0
       with:
-        go-version: "1.21"
+        repo: hxrxchang/gtd-manager
+        tag: v0.0.1
+        platform: linux
+        arch: amd64
 
     - name: Run
       shell: bash
-      run: ACCESS_TOKEN=${{ inputs.ACCESS_TOKEN}} REPOSITORY=${{ inputs.REPOSITORY }} go run cmd/gtd/main.go
+      run: ACCESS_TOKEN=${{ inputs.ACCESS_TOKEN}} REPOSITORY=${{ inputs.REPOSITORY }} gtd
