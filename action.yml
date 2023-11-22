@@ -23,7 +23,7 @@ runs:
     - name: Install gtd
       shell: bash
       run: |
-        go install github.com/hxrxchang/gtd-manager/cmd/gtd@v0.0.3
+        go install github.com/hxrxchang/gtd-manager/cmd/gtd@latest
 
     - name: Run
       shell: bash
