@@ -52,5 +52,3 @@ func mergeAndFilter(body string, tasks *DividedTasks, keyOrder *[]string) {
 		}
 	}
 }
-
-
