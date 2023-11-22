@@ -22,7 +22,7 @@ func New(token string) *GitHub {
 	return &GitHub{client: client}
 }
 
-func (g *GitHub) GetIssueData(username, repo string) (*issue.Issue, error) {
+func (g *GitHub) GetIssue(username, repo string) (*issue.Issue, error) {
 	variables := map[string]interface{}{
 		"name":  githubv4.String(repo),
 		"owner": githubv4.String(username),

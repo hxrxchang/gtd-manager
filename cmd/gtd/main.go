@@ -18,7 +18,7 @@ func main() {
 
 	// step2: GitHub APIを叩いてissueを取得する
 	gh := github.New(token)
-	i, err := gh.GetIssueData(username, repo)
+	i, err := gh.GetIssue(username, repo)
 	if err != nil {
 		log.Fatal(err)
 	}
