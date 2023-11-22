@@ -18,18 +18,18 @@ func main() {
 
 	// step2: GitHub APIを叩いてissueを取得する
 	gh := github.New(token)
-	i, err := gh.GetIssueData(username, repo)
+	i, err := gh.GetIssue(username, repo)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// step3: issueのBodyとコメントのmarkdownから未完了タスクだけを抽出する
-	filtered := i.FilterNotChecked()
+	// step3: issueのBodyとコメントのmarkdownから未完了タスクだけを抽出して、headingごとに分類する
+	processed := i.Process()
 
 	// step4: 抽出したタスクをGitHubのIssueに登録する
 	currentTime := time.Now()
 	today := currentTime.Format("2006-01-02")
-	title, err := gh.CreateIssue(i.RepoID, today, filtered)
+	title, err := gh.CreateIssue(i.RepoID, today, processed)
 	if err != nil {
 		log.Fatal(err)
 	}
