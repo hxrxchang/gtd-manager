@@ -1,4 +1,4 @@
-name: "Create a new issue"
+name: "gtd-manager"
 description: "Extract and register only the incomplete tasks from yesterday's issue into a new issue"
 inputs:
   ACCESS_TOKEN: # id of input
