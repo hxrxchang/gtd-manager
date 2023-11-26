@@ -1,11 +1,11 @@
 name: "gtd-manager"
 description: "Extract and register only the incomplete tasks from yesterday's issue into a new issue"
 inputs:
-  ACCESS_TOKEN: # id of input
+  GITHUB_TOKEN: # id of input
     description: "Access token which has read and write access to issues"
     required: true
     default: ""
-  REPOSITORY:
+  GITHUB_REPOSITORY:
     description: "Repository name"
     required: true
     default: ""
@@ -29,4 +29,4 @@ runs:
       shell: bash
       env:
         TZ: ${{ inputs.TIME_ZONE }}
-      run: ACCESS_TOKEN=${{ inputs.ACCESS_TOKEN}} REPOSITORY=${{ inputs.REPOSITORY }} gtd
+      run: GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN}} GITHUB_REPOSITORY=${{ inputs.GITHUB_REPOSITORY }} gtd

@@ -7,15 +7,15 @@ import (
 )
 
 func GetGitHubInfo() (string, string, string, error) {
-	token := os.Getenv("ACCESS_TOKEN")
-	ghrepo := os.Getenv("REPOSITORY")
+	token := os.Getenv("GITHUB_TOKEN")
+	ghrepo := os.Getenv("GITHUB_REPOSITORY")
 
 	if token == "" {
-		return "", "", "", fmt.Errorf("ACCESS_TOKEN is required")
+		return "", "", "", fmt.Errorf("GITHUB_TOKEN is required")
 	}
 
 	if ghrepo == "" {
-		return "", "", "", fmt.Errorf("REPOSITORY is required")
+		return "", "", "", fmt.Errorf("GITHUB_REPOSITORY is required")
 	}
 
 	username := strings.Split(ghrepo, "/")[0]
