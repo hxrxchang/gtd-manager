@@ -24,6 +24,9 @@ func (i *Issue) Process() string {
 
 	var res string
 	for _, key := range keysOrder {
+		if len(tasks[key]) == 0 {
+			continue
+		}
 		res += key + "\n"
 		for _, task := range tasks[key] {
 			res += task + "\n"
