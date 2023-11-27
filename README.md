@@ -30,7 +30,7 @@ jobs:
   create_issue:
     runs-on: ubuntu-latest
     steps:
-      - uses: hxrxchang/gtd-manager@latest
+      - uses: hxrxchang/gtd-manager@v0.0.8
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: $GITHUB_REPOSITORY
