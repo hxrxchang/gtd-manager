@@ -29,4 +29,11 @@ runs:
       shell: bash
       env:
         TZ: ${{ inputs.TIME_ZONE }}
-      run: GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN}} GITHUB_REPOSITORY=${{ inputs.GITHUB_REPOSITORY }} gtd
+      run: |
+        options=""
+        if [ -n "$LABEL" ]; then
+          options="$options -label \"$LABEL\""
+        fi
+
+        command $options
+        GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN}} GITHUB_REPOSITORY=${{ inputs.GITHUB_REPOSITORY }} gtd $options
