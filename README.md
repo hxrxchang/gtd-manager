@@ -5,6 +5,8 @@
 gtd-manager は GitHub の Issue でタスク管理を簡単に行えるようにする CLI ツールです。  
 gtd は [Getting Things Done](https://asana.com/ja/resources/getting-things-done-gtd) の略です。
 
+[GitHub Issues と GitHub Actions でいい感じにタスク管理できるツールを作った](https://hxrxchang.dev/blog/getting-things-done-in-github) に開発したモチベーションなどが書かれています。
+
 gtd-manager を実行すると、Repository の最新の Issue を取得して、その Issue の Body とコメントから未完了のタスクだけを抜き出して、新たな Issue を作成します。  
 下記の yml ファイルの例のように、with の `LABEL` にラベル名を指定すると、そのラベルがついた最新の issue を元にすることもできます。
 同じ見出しの直下にあるタスクは、別コメントに記述されていてもまとめられます。
