@@ -12,6 +12,9 @@ inputs:
   TIME_ZONE:
     description: "Time zone"
     default: "UTC"
+  LABEL:
+    description: "Label name"
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -29,6 +32,7 @@ runs:
       shell: bash
       env:
         TZ: ${{ inputs.TIME_ZONE }}
+        LABEL: ${{ inputs.LABEL }}
       run: |
         options=""
         if [ -n "$LABEL" ]; then
