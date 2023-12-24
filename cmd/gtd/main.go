@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"time"
@@ -17,8 +18,12 @@ func main() {
 	}
 
 	// step2: GitHub APIを叩いてissueを取得する
+	label := flag.String("label", "", "issue's label")
+	flag.Parse()
+	options := github.OptionsInput{Label: *label}
+
 	gh := github.New(token)
-	i, err := gh.GetIssue(username, repo)
+	i, err := gh.GetIssue(username, repo, &options)
 	if err != nil {
 		log.Fatal(err)
 	}

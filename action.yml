@@ -12,6 +12,9 @@ inputs:
   TIME_ZONE:
     description: "Time zone"
     default: "UTC"
+  LABEL:
+    description: "Label name"
+    default: ""
 runs:
   using: "composite"
   steps:
@@ -29,4 +32,12 @@ runs:
       shell: bash
       env:
         TZ: ${{ inputs.TIME_ZONE }}
-      run: GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN}} GITHUB_REPOSITORY=${{ inputs.GITHUB_REPOSITORY }} gtd
+        LABEL: ${{ inputs.LABEL }}
+      run: |
+        options=""
+        if [ -n "$LABEL" ]; then
+          options="$options -label \"$LABEL\""
+        fi
+
+        command $options
+        GITHUB_TOKEN=${{ inputs.GITHUB_TOKEN}} GITHUB_REPOSITORY=${{ inputs.GITHUB_REPOSITORY }} gtd $options
