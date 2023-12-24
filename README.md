@@ -6,7 +6,7 @@ gtd-manager は GitHub の Issue でタスク管理を簡単に行えるよう�
 gtd は [Getting Things Done](https://asana.com/ja/resources/getting-things-done-gtd) の略です。
 
 gtd-manager を実行すると、Repository の最新の Issue を取得して、その Issue の Body とコメントから未完了のタスクだけを抜き出して、新たな Issue を作成します。  
-`LABEL` にラベル名を指定すると、そのラベルがついた最新の issue を元にします。  
+下記の yml ファイルの例のように、with の `LABEL` にラベル名を指定すると、そのラベルがついた最新の issue を元にします。  
 同じ見出しの直下にあるタスクは、別コメントに記述されていてもまとめられます。
 
 | 最新の issue                                | 作成された issue                               |
@@ -35,7 +35,8 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: $GITHUB_REPOSITORY
-          TIME_ZONE: "Asia/Tokyo" #オプショナル。デフォルトはUTC
+          TIME_ZONE: "Asia/Tokyo" #オプショナル。デフォルトはUTC。
+          LABEL: "日報" #オプショナル。ラベル名を指定できる。
 ```
 
 `secrets.GITHUB_TOKEN` が書き込み権限を持てるように、リポジトリの Settings -> Actions -> General を開いて、 Workflow permissions で `Read and write permissions` を選択してください。
