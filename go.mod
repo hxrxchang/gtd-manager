@@ -1,6 +1,6 @@
 module github.com/hxrxchang/gtd-manager
 
-go 1.21.0
+go 1.22.0
 
 require (
 	github.com/shurcooL/githubv4 v0.0.0-20230704064427-599ae7bbf278
