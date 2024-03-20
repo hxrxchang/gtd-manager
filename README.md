@@ -33,10 +33,9 @@ jobs:
   create_issue:
     runs-on: ubuntu-latest
     steps:
-      - uses: hxrxchang/gtd-manager@v0.1.0
+      - uses: hxrxchang/gtd-manager@v0.1.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_REPOSITORY: $GITHUB_REPOSITORY
           TIME_ZONE: "Asia/Tokyo" #オプショナル。デフォルトはUTC。
           LABEL: "日報" #オプショナル。ラベル名を指定できる。
 ```
