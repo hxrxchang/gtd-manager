@@ -25,9 +25,9 @@ runs:
       shell: bash
       run: |
         if [ "$arch" = "aarch64" ]; then
-          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.9/gtd-manager_Linux_arm64.tar.gz" >> $GITHUB_ENV
+          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.10/gtd-manager_Linux_arm64.tar.gz" >> $GITHUB_ENV
         elif [ "$arch" = "x86_64" ]; then
-          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.9/gtd-manager_Linux_x86_64.tar.gz" >> $GITHUB_ENV
+          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.10/gtd-manager_Linux_x86_64.tar.gz" >> $GITHUB_ENV
         fi
 
     - name: Install gtd-manager
@@ -44,9 +44,11 @@ runs:
         LABEL: ${{ inputs.LABEL }}
       run: |
         if [ -n "$LABEL" ]; then
-          options="-label \"$LABEL\""
+          options="-label $LABEL"
         else
           options=""
         fi
+
+        echo $options
 
         ./gtd-manager $options
