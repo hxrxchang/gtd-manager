@@ -22,17 +22,16 @@ runs:
       shell: bash
       run: |
         if [ "$arch" = "aarch64" ]; then
-          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.6/gtd-manager_Linux_arm64.tar.gz" >> $GITHUB_ENV
+          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.7/gtd-manager_Linux_arm64.tar.gz" >> $GITHUB_ENV
         elif [ "$arch" = "x86_64" ]; then
-          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.6/gtd-manager_Linux_x86_64.tar.gz" >> $GITHUB_ENV
+          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.7/gtd-manager_Linux_x86_64.tar.gz" >> $GITHUB_ENV
         fi
 
     - name: Install gtd-manager
       shell: bash
       run: |
-        curl -L $BINARY_URL --output gtd.gz
-        gunzip gtd.gz
-        chmod +x gtd
+        curl -L $BINARY_URL --output gtd-manager.gz
+        tar -xzf gtd-manager.gz
 
     - name: Run
       shell: bash
@@ -45,4 +44,4 @@ runs:
           options="$options -label \"$LABEL\""
         fi
 
-        ./gtd $options
+        ./gtd-manager $options
