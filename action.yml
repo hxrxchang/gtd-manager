@@ -22,12 +22,12 @@ runs:
     - name: Set Binary URL for arm64
       shell: bash
       if: steps.arch.outputs.arch == 'aarch64'
-      run: echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1/gtd-manager_Linux_arm64.tar.gz" >> $GITHUB_ENV
+      run: echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.0/gtd-manager_Linux_arm64.tar.gz" >> $GITHUB_ENV
 
     - name: Set Binary URL for x86_64
       shell: bash
       if: steps.arch.outputs.arch == 'x86_64'
-      run: echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1/gtd-manager_Linux_x86_64.tar.gz" >> $GITHUB_ENV
+      run: echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.0/gtd-manager_Linux_x86_64.tar.gz" >> $GITHUB_ENV
 
     - name: Install gtd-manager
       shell: bash
