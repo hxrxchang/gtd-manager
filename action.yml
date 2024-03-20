@@ -1,6 +1,9 @@
 name: "gtd-manager"
 description: "Extract and register only the incomplete tasks from yesterday's issue into a new issue"
 inputs:
+  GITHUB_TOKEN:
+    description: "GitHub Token"
+    required: true
   TIME_ZONE:
     description: "Time zone"
     default: "UTC"
@@ -22,9 +25,9 @@ runs:
       shell: bash
       run: |
         if [ "$arch" = "aarch64" ]; then
-          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.7/gtd-manager_Linux_arm64.tar.gz" >> $GITHUB_ENV
+          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.8/gtd-manager_Linux_arm64.tar.gz" >> $GITHUB_ENV
         elif [ "$arch" = "x86_64" ]; then
-          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.7/gtd-manager_Linux_x86_64.tar.gz" >> $GITHUB_ENV
+          echo "BINARY_URL=https://github.com/hxrxchang/gtd-manager/releases/download/v0.1.1-rc.8/gtd-manager_Linux_x86_64.tar.gz" >> $GITHUB_ENV
         fi
 
     - name: Install gtd-manager
@@ -36,6 +39,7 @@ runs:
     - name: Run
       shell: bash
       env:
+        GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
         TZ: ${{ inputs.TIME_ZONE }}
         LABEL: ${{ inputs.LABEL }}
       run: |
